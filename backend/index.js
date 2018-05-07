@@ -48,24 +48,23 @@ app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id);
   const person = getWithId(id);
   if (person) {
-    response.json(person);
+    return response.json(person);
   }
   respondWithError(response, 404, `No user exists with id ${id}`);
-  response.status(404).end();
 });
 
 app.post('/api/persons', (request, response) => {
   const { name, number } = request.body;
   if (!name) {
-    respondWithError(response, 400, `Name must be defined.`);
+    return respondWithError(response, 400, `Name must be defined.`);
   }
   if (!number) {
-    respondWithError(response, 400, `Number must be defined.`);
+    return respondWithError(response, 400, `Number must be defined.`);
   }
   if (name && number) {
     const existingPerson = getWithName(name);
     if (existingPerson) {
-      respondWithError(response, 409, 'Name must be unique');
+      return respondWithError(response, 409, 'Name must be unique');
     }
     const newPerson = addNewPerson(name, number);
     response.status(201);
@@ -78,7 +77,7 @@ app.delete('/api/persons/:id', (request, response) => {
   const updatedPersons = removeId(id);
   if (updatedPersons.length !== persons.length) {
     persons = updatedPersons;
-    response.status(204).end();
+    return response.status(204).end();
   }
   respondWithError(response, 404, `No user exists with id ${id}`);
 });
@@ -86,10 +85,10 @@ app.delete('/api/persons/:id', (request, response) => {
 app.put('/api/persons/:id', (request, response) => {
   const { name, number } = request.body;
   if (!name) {
-    respondWithError(response, 400, `Name must be defined.`);
+    return respondWithError(response, 400, `Name must be defined.`);
   }
   if (!number) {
-    respondWithError(response, 400, `Number must be defined.`);
+    return respondWithError(response, 400, `Number must be defined.`);
   }
   let member = getById(id);
   if (member) {
@@ -104,7 +103,7 @@ app.patch('/api/persons/:id', (request, response) => {
   let member = getById(id);
   if (member) {
     Object.entries(patch).forEach(([key, value]) => (member[key] = value));
-    response.json(member);
+    return response.json(member);
   }
   respondWithError(response, 404, `No user exists with id ${id}`);
 });
