@@ -1,0 +1,6 @@
+PATCH http://localhost:3001/api/persons/1
+Content-Type: application/json
+
+{
+  "name": "Päivitetty nimi",
+}
