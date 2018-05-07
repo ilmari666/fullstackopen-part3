@@ -65,8 +65,7 @@ app.post('/api/persons', (request, response) => {
   if (name && number) {
     const existingPerson = getWithName(name);
     if (existingPerson) {
-      response.status(409);
-      response.json(existingPerson);
+      respondWithError(response, 409, 'Name must be unique');
     }
     const newPerson = addNewPerson(name, number);
     response.status(201);
