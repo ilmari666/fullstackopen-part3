@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 const PORT = 3001;
 let persons = [{ name: 'nimi', number: '123', id: 1, created: 12345678 }]; //@todo copy from tehtävänanto
 const app = express();
 app.use(bodyParser.json());
+app.use(morgan('tiny');
 
 const getId = function() {
   return Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
