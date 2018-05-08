@@ -3,7 +3,11 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 const PORT = 3001;
-let persons = [{ name: 'nimi', number: '123', id: 1, created: 12345678 }]; //@todo copy from tehtävänanto
+let persons = [
+  { name: 'nimi ykkönen', number: '123', id: 1, created: 12345678 }
+  { name: 'nimi kakkonen', number: '1234', id: 2, created: 12345679 }
+]; //@todo copy from tehtävänanto
+
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
@@ -26,9 +30,9 @@ const addNewPerson = function(name, number) {
 const getWithName = personName =>
   persons.find(({ name }) => name === personName);
 
-const getWithId = personID => persons.find(({ id }) => id === personID);
+const getWithId = personId => persons.find(({ id }) => id === personId);
 
-const removeId = personId => persons.filter(({ id }) => id != personID);
+const removeId = personId => persons.filter(({ id }) => id != personId);
 
 const respondWithError = (response, statusCode, message) => {
   response.status(statusCode);
@@ -85,14 +89,16 @@ app.delete('/api/persons/:id', (request, response) => {
 });
 
 app.put('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
   const { name, number } = request.body;
+  //doesnt check for duplicate existing name
   if (!name) {
     return respondWithError(response, 400, `Name must be defined.`);
   }
   if (!number) {
     return respondWithError(response, 400, `Number must be defined.`);
   }
-  let member = getById(id);
+  let member = getWithId(id);
   if (member) {
     member.name = name;
     member.number = number;
@@ -101,9 +107,12 @@ app.put('/api/persons/:id', (request, response) => {
 });
 
 app.patch('/api/persons/:id', (request, response) => {
-  const { patch } = request.body;
-  let member = getById(id);
+  const id = Number(request.params.id);
+  const patch = request.body;
+  let member = getWithId(id);
   if (member) {
+    //doesnt validate keys
+    //doesnt validate entries for duplicate content (ie names)
     Object.entries(patch).forEach(([key, value]) => (member[key] = value));
     return response.json(member);
   }
@@ -112,9 +121,9 @@ app.patch('/api/persons/:id', (request, response) => {
 
 // catch unhandled requests
 const error = (request, response) => {
-  response.status(404).send({error: 'unknown endpoint'})
+  response.status(404).send({ error: 'unknown endpoint' });
 };
 
-app.use(error)
+app.use(error);
 
 app.listen(PORT);

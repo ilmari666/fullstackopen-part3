@@ -1,6 +1,6 @@
-PATCH http://localhost:3001/api/persons/1
+PATCH http://localhost:3001/api/persons/4007437977664160
 Content-Type: application/json
 
 {
-  "name": "Päivitetty nimi",
+  "name": "Päivitetty nimi"
 }
