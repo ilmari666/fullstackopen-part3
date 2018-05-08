@@ -110,4 +110,11 @@ app.patch('/api/persons/:id', (request, response) => {
   respondWithError(response, 404, `No user exists with id ${id}`);
 });
 
+// catch unhandled requests
+const error = (request, response) => {
+  response.status(404).send({error: 'unknown endpoint'})
+};
+
+app.use(error)
+
 app.listen(PORT);
