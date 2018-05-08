@@ -4,7 +4,7 @@ const morgan = require('morgan');
 
 const PORT = 3001;
 let persons = [
-  { name: 'nimi ykkönen', number: '123', id: 1, created: 12345678 }
+  { name: 'nimi ykkönen', number: '123', id: 1, created: 12345678 },
   { name: 'nimi kakkonen', number: '1234', id: 2, created: 12345679 }
 ]; //@todo copy from tehtävänanto
 
