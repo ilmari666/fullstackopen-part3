@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const PORT = 3001;
 let persons = [
@@ -9,6 +10,7 @@ let persons = [
 ]; //@todo copy from tehtävänanto
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 //app.use(morgan('tiny'));
 
