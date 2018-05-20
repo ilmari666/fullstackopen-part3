@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
+
 let persons = [
   { name: 'nimi ykkönen', number: '123', id: 1, created: 12345678 },
   { name: 'nimi kakkonen', number: '1234', id: 2, created: 12345679 }
@@ -12,14 +13,16 @@ let persons = [
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-//app.use(morgan('tiny'));
+app.use(express.static('build'));
 
 morgan.token('body', function(req, res) {
   return JSON.stringify(req.body);
 });
+
 app.use(
   morgan(':method :url :body :status :res[content-length] - :response-time ms')
 );
+//app.use(morgan('tiny'));
 
 const getId = function() {
   return Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
@@ -135,4 +138,6 @@ const error = (request, response) => {
 
 app.use(error);
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
