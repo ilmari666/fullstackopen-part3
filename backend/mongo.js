@@ -1,13 +1,5 @@
-require('dotenv').config();
+const Person = require('./models/person');
 const mongoose = require('mongoose');
-
-const Person = mongoose.model('Person', {
-  name: String,
-  number: String,
-  created: Date
-});
-
-mongoose.connect(process.env.DB_URI);
 
 if (process.argv.length === 4) {
   const [name, number] = process.argv.slice(2);
