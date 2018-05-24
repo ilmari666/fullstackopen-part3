@@ -53,7 +53,8 @@ app.get('/api/persons', (request, response) => {
 app.get('/api/persons/:id', (request, response) => {
   const id = request.params.id;
   Person.findById(id)
-    .then(person => response.json(Person.format(person)))
+    .then(Person.format)
+    .then(response.json)
     .catch(e =>
       respondWithError(response, 404, `No user exists with id ${id}`)
     );
@@ -79,10 +80,12 @@ app.post('/api/persons', (request, response) => {
           number,
           created: new Date()
         });
-        person.save().then(savedPerson => {
-          response.status(201);
-          response.json(Person.format(savedPerson));
-        });
+        person.save()
+          .then(Person.format)
+          .then(formattedPerson => {
+            response.status(201);
+            response.json(formattedPerson);
+          });
       })
       .catch(e => {
         return respondWithError(response, 409, 'Name must be unique');
@@ -104,7 +107,8 @@ app.put('/api/persons/:id', (request, response) => {
   const { name, number } = request.body;
   if (name && number) {
     Person.findOneAndUpdate(id, { name, number })
-      .then(member => response.json(Person.format(member)))
+      .then(Person.format)
+      .then(response.json)
       .catch(e => respondWithError(response, 400, `Bad request`));
   } else {
     respondWithError(response, 400, `Bad request`);
@@ -116,7 +120,8 @@ app.patch('/api/persons/:id', (request, response) => {
   // no validation of patch data can overwrite anything
   const patch = request.body;
   Person.findOneAndUpdate(id, patch)
-    .then(member => response.json(Person.format(member)))
+    .then(Person.format)
+    .then(response.json)
     .catch(e =>
       respondWithError(response, 404, `No user exists with id ${id}`)
     );
