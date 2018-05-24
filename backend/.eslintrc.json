@@ -2,11 +2,15 @@
     "extends": "airbnb-base",
     "parserOptions": {
         "sourceType": "module",
+        "parserOptions": {
+            "ecmaVersion": 2018
+        },
         "ecmaFeatures": {
-            "jsx": false
+            "jsx": true
         }
     },
     "rules": {
-        "react/jsx-curly-brace-presence": "always"
+        "react/jsx-curly-brace-presence": "off",
+        "arrow-parens": "off"
     }
 }

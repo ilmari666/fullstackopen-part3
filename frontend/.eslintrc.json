@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb-base",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "react/jsx-curly-brace-presence": "off",
+    "babel/semi": 1,
+    "arrow-parens": 0
+  },
+  "plugins": [
+    "babel"
+  ]
+}

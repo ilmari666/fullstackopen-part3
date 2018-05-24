@@ -7,9 +7,9 @@ if (process.argv.length === 4) {
   const p = new Person({
     name,
     number,
-    created: new Date()
+    created: new Date(),
   });
-  p.save().then(response => mongoose.connection.close());
+  p.save().then(() => mongoose.connection.close());
 } else {
   console.log('puhelinluettelo:');
   Person.find({}).then(result => {
