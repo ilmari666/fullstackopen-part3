@@ -1,0 +1,12 @@
+{
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
+    "rules": {
+        "react/jsx-curly-brace-presence": "always"
+    }
+}
