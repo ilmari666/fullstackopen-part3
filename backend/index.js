@@ -36,7 +36,7 @@ app.get('/api/persons/:id', (request, response) => {
   const { id } = request.params;
   Person.findById(id)
     .then(Person.format)
-    .then(response.json)
+    .then(formattedPerson => response.json(formattedPerson))
     .catch(() =>
       respondWithError(response, 404, `No user exists with id ${id}`));
 });
@@ -84,8 +84,9 @@ app.put('/api/persons/:id', (request, response) => {
   const { name, number } = request.body;
   if (name && number) {
     Person.findOneAndUpdate(id, { name, number })
+      .then((data) => data)
       .then(Person.format)
-      .then(response.json)
+      .then(formattedPerson => response.json(formattedPerson))
       .catch(() => respondWithError(response, 400, 'Bad request'));
   } else {
     respondWithError(response, 400, 'Bad request');
@@ -98,7 +99,7 @@ app.patch('/api/persons/:id', (request, response) => {
   const patch = request.body;
   Person.findOneAndUpdate(id, patch)
     .then(Person.format)
-    .then(response.json)
+    .then(formattedPerson => response.json(formattedPerson))
     .catch(() =>
       respondWithError(response, 404, `No user exists with id ${id}`));
 });
