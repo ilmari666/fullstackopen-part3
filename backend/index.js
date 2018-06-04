@@ -83,8 +83,7 @@ app.put('/api/persons/:id', (request, response) => {
   const { id } = request.params;
   const { name, number } = request.body;
   if (name && number) {
-    Person.findOneAndUpdate(id, { name, number })
-      .then((data) => data)
+    Person.findByIdAndUpdate(id, { name, number }, { new: true })
       .then(Person.format)
       .then(formattedPerson => response.json(formattedPerson))
       .catch(() => respondWithError(response, 400, 'Bad request'));
