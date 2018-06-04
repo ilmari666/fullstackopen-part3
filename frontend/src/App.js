@@ -30,8 +30,7 @@ class App extends React.Component {
     event.preventDefault();
     const { newName: name, newNumber: number, persons } = this.state;
     const contact = { name, number };
-    const existingContact = persons.find(({ personName }) => personName === name);
-
+    const existingContact = persons.find(({ name: personName }) => personName === name);
     if (existingContact) {
       // CONFIRM then  update exiting contact
       const id = existingContact.id;

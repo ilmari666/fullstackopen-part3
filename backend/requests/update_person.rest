@@ -1,4 +1,4 @@
-PUT http://localhost:3001/api/persons/1
+PUT http://localhost:3001/api/persons/aa 12delete
 Content-Type: application/json
 
 {
